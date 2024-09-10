@@ -1,0 +1,139 @@
+---
+# Default values for redis-commander.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+# All values should be commented with "# -- text..." to allow auto-generation of the documentation
+
+# -- Number of replicas to create for deployment, should be 1
+replicaCount: 1
+image:
+  # -- Docker image for deployment
+  repository: ghcr.io/joeferner/redis-commander
+  # -- Deployment pull policy, either "Always" or "IfNotPresent"
+  pullPolicy: Always
+  # -- Enable AppArmor per default when available on k8s host, change to "unconfined" to disable.
+  # Either AppArmor or SecComp may be enabled by the container runtime
+  apparmorProfile: runtime/default
+  # -- Enable SecComp profile when used by cluster, change to "unconfined" to disable.
+  # Either AppArmor or SecComp may be enabled by the container runtime
+  seccompProfile: runtime/default
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Optional image pull secrets for private docker registries
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+redis:
+  prefix: "/redis-commander"
+  # -- Specifies a single Redis host
+  host: "redis-master"
+
+  # -- Specifies redis username - supported since Redis 6.0 with ACL support.
+  username: ""
+  # -- Specifies redis password
+  password: "123456"
+
+  # -- Alternative: Specifies multiple redis endpoints <label:host:port>,... instead of one in "redis.host"
+  # Example: "local:localhost:6379,myredis:10.10.20.30"
+  hosts: ""
+
+httpAuth:
+  # -- Specify http basic username and password to protect access to redis commander web ui
+  username: ""
+  # -- Specify http basic password for the web ui
+  password: ""
+
+# -- Extra env vars for the main pod redis-commander in array structure ([{name: ... , value: ...}, {name: ... , value: ...}]).
+env: []
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  # When no service account is created the account credentials of the default account are also not automatically
+  # mounted into the pod (automountServiceAccountToken: false), tokens only mounted when service account is used
+  # but Redis-Commander itself does not use the k8s api server token
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# -- Configuration of the linux security context for the docker image. This restricts the
+# rights of the running docker image as far as possible.
+#
+# "readOnlyRootFilesystem" must be set to false to auto-generate a config file with multiple redis hosts or
+# sentinel hosts
+securityContext:
+  runAsNonRoot: true
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  # -- Type of k8s service to export
+  type: ClusterIP
+  # -- External port where service is available
+  port: 80
+
+ingress:
+  # -- Enable Ingress for the service
+  enabled: false
+  # -- Use *Legacy*, deprecated Ingress versions.
+  # Ingress apiVersions prior to `networking.k8s.io/v1` are deprecated and
+  # removed in kubernetes 1.22.
+  # Set the `legacy` flag to *true* if you are using kubernetes older than 1.19 or
+  # OpenShift v3 and require support for the older API versions.
+  legacy: false
+  # -- Set the pathType for the v1 Ingress resource.  This setting is ignored for `legacy` Ingress resources.
+  # Details on **Path Type** are available here; https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+  pathType: ImplementationSpecific
+  # -- Add additional annotations for the ingess spec
+  # Example:
+  #   'kubernetes.io/ingress.class: nginx' or 'kubernetes.io/tls-acme: "true"'
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    # -- Host name to use for the ingress definition
+    - host: chart-example.local
+      # -- list of paths within the given host for path-based routing, otherwise the root path "/" will be used
+      paths:
+        - "/"
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# -- We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# -- Autoscaling configuration for k8s deployment
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

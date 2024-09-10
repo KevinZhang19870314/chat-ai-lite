@@ -1,0 +1,83 @@
+{
+	"name": "chat-ai-lite",
+	"version": "1.0.0",
+	"private": false,
+	"description": "ChatGPT Web",
+	"author": "Admin <Admin@gmail.com>",
+	"keywords": [
+		"chat-ai-lite",
+		"chatgpt",
+		"chatbot",
+		"vue"
+	],
+	"scripts": {
+		"dev": "vite",
+		"build": "run-p type-check build-only",
+		"preview": "vite preview",
+		"build-only": "vite build",
+		"type-check": "vue-tsc --noEmit",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"bootstrap": "pnpm install && pnpm run common:prepare",
+		"common:cleanup": "rimraf node_modules && rimraf pnpm-lock.yaml",
+		"common:prepare": "husky install"
+	},
+	"dependencies": {
+		"@fuyun/generative-ai": "0.1.3",
+		"@traptitech/markdown-it-katex": "^3.6.0",
+		"@vicons/ionicons5": "^0.12.0",
+		"@vueuse/core": "^10.5.0",
+		"bcryptjs": "^2.4.3",
+		"dayjs": "^1.11.10",
+		"dplayer": "^1.27.1",
+		"echarts": "^5.4.3",
+		"gridstack": "^10.1.2",
+		"highlight.js": "^11.7.0",
+		"html2canvas": "^1.4.1",
+		"katex": "^0.16.4",
+		"localforage": "^1.10.0",
+		"markdown-it": "^13.0.1",
+		"naive-ui": "^2.35.0",
+		"pinia": "^2.0.33",
+		"recordrtc": "^5.6.2",
+		"vue": "^3.2.47",
+		"vue-audio-visual": "^3.0.6",
+		"vue-echarts": "^6.6.1",
+		"vue-i18n": "^9.2.2",
+		"vue-router": "^4.1.6"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.5.1",
+		"@commitlint/config-conventional": "^17.4.4",
+		"@iconify/vue": "^4.1.2",
+		"@types/crypto-js": "^4.1.1",
+		"@types/dplayer": "^1.25.5",
+		"@types/katex": "^0.16.0",
+		"@types/markdown-it": "^12.2.3",
+		"@types/markdown-it-link-attributes": "^3.0.1",
+		"@types/node": "^18.15.11",
+		"@types/recordrtc": "^5.6.14",
+		"@vitejs/plugin-vue": "^4.1.0",
+		"autoprefixer": "^10.4.14",
+		"axios": "^1.3.5",
+		"crypto-js": "^4.1.1",
+		"eslint": "^8.56.0",
+		"husky": "^8.0.3",
+		"less": "^4.1.3",
+		"lint-staged": "^13.2.0",
+		"markdown-it-link-attributes": "^4.0.1",
+		"npm-run-all": "^4.1.5",
+		"postcss": "^8.4.21",
+		"rimraf": "^4.4.1",
+		"tailwindcss": "^3.3.1",
+		"typescript": "~4.9.5",
+		"vite": "^4.2.1",
+		"vite-plugin-pwa": "^0.14.7",
+		"vue-tsc": "^1.2.0"
+	},
+	"lint-staged": {
+		"*.{ts,tsx,vue}": [
+			"pnpm lint:fix"
+		]
+	}
+}

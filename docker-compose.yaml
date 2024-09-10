@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  mysql:
+    hostname: mysql
+    image: mysql:5.7.26
+    container_name: mysql # 指定容器名称，如果不设置此参数，则由系统自动生成
+    restart: always # 设置容器自启模式
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # --ignore-db-dir=chat-ai-lite # 设置utf8字符集
+    environment:
+      - TZ=UTC # 设置容器时区与宿主机保持一致
+      - MYSQL_ROOT_PASSWORD=root # 设置root密码
+      - MYSQL_DATABASE=chat-ai-lite
+    volumes:
+      # - /etc/localtime:/etc/localtime:ro # 设置容器时区与宿主机保持一致
+      - ./chore/mysql/data:/var/lib/mysql # 映射数据库保存目录到宿主机，防止数据丢失
+      - ./chore/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    ports:
+      - '10000:3306'
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    privileged: true
+
+  redis:
+    image: redis:latest
+    container_name: my-redis
+    restart: always
+    ports:
+      - "10001:6379"
+    volumes:
+      - ./chore/redis/data:/data
+
+  deep-ai:
+    build:
+      context: ./deep-ai
+      dockerfile: Dockerfile
+    container_name: deep_ai
+    env_file:
+      - ./deep-ai/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - 10002:8000
+    volumes:
+      - ./chore/deep-ai:/app/storage
+    restart: unless-stopped
+    entrypoint: ["/app/wait-for-it.sh", "mysql:3306", "--", "python", "home.py"]
+    depends_on:
+      - mysql
+      - redis
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 10003:80
+    env_file:
+      - .env
+    depends_on:
+      - deep-ai

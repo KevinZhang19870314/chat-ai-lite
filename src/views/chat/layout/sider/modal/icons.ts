@@ -1,0 +1,18 @@
+export const ICONS = [
+  'ri:message-3-line',
+  'fluent-emoji-flat:1st-place-medal',
+  'fluent-emoji-flat:2nd-place-medal',
+  'fluent-emoji-flat:3rd-place-medal',
+  'fluent-emoji-flat:a-button-blood-type',
+  'fluent-emoji-flat:ab-button-blood-type',
+  'fluent-emoji-flat:abacus',
+  'fluent-emoji-flat:accordion',
+  'fluent-emoji-flat:adhesive-bandage',
+  'fluent-emoji-flat:admission-tickets',
+  'fluent-emoji-flat:aerial-tramway',
+  'fluent-emoji-flat:airplane',
+  'fluent-emoji-flat:airplane-arrival',
+  'fluent-emoji-flat:airplane-departure',
+  'fluent-emoji-flat:alarm-clock',
+  'fluent-emoji-flat:alembic',
+]

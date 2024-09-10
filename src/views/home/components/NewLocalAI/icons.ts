@@ -1,0 +1,18 @@
+export const ICONS = [
+  'fluent-emoji-flat:antenna-bars',
+  'fluent-emoji-flat:ant',
+  'fluent-emoji-flat:astronaut',
+  'fluent-emoji-flat:aquarius',
+  'fluent-emoji-flat:baggage-claim',
+  'fluent-emoji-flat:beetle',
+  'fluent-emoji-flat:basketball',
+  'fluent-emoji-flat:bookmark-tabs',
+  'fluent-emoji-flat:briefcase',
+  'fluent-emoji-flat:candy',
+  'fluent-emoji-flat:chart-decreasing',
+  'fluent-emoji-flat:cinema',
+  'fluent-emoji-flat:chart-increasing-with-yen',
+  'fluent-emoji-flat:chart-increasing',
+  'fluent-emoji-flat:collision',
+  'fluent-emoji-flat:currency-exchange',
+]

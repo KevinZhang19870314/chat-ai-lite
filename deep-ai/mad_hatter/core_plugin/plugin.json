@@ -1,0 +1,10 @@
+{
+  "name": "Core Plugins",
+  "description": "Deep AI 内置插件，包含默认hooks和tools，启动 Deep AI 之后会在生命周期中执行这些默认hooks，也可以自定义hooks覆盖这些默认行为，默认tools - get_the_time 获取当前时间。",
+  "author_name": "Deep AI",
+  "author_url": "https://deep.ai",
+  "plugin_url": "https://github.com/kevinzhang19870314",
+  "tags": "core, default, Deep AI",
+  "thumb": "",
+  "version": "0.0.2"
+}
